@@ -3,6 +3,8 @@ package com.example.demo.controller;
 import com.example.demo.model.Task;
 import com.example.demo.repositories.TaskRepository;
 
+import jakarta.validation.Valid;
+
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -33,23 +37,24 @@ public class TaskController {
         return taskRepository.findAll();
     }
 
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     @GetMapping("/{id}")
-    public Task getTaskById(Long id) {
+    public Task getTaskById(@Valid @PathVariable("id") Long id) {
         return taskRepository.findById(id).orElse(null);
     }
 
     @PostMapping
-    public Task createTask(@RequestBody Task task) {
+    public Task createTask(@Valid @RequestBody Task task) {
         return taskRepository.save(task);
     }
 
     @PutMapping("/{id}")
-    public Task updateTask(@PathVariable Long id, @RequestBody Task task) {
+    public Task updateTask(@Valid @PathVariable("id") Long id, @RequestBody Task task) {
         return taskRepository.save(task);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteTask(@PathVariable Long id) {
+    public void deleteTask(@Valid @PathVariable("id") Long id) {
         taskRepository.deleteById(id);
     }
 
