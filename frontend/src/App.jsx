@@ -82,7 +82,7 @@ function App() {
         {todos.map((todo, index) => (
           <li key={todo.id}>
             <span>{"Task " + (todo.id) + ": "+ todo.taskdescription}</span>
-            <button onClick={(event) => handleDelete(event, todo.id) }>&#10004;</button>
+            <button onClick={(event) => handleDelete(event, todo.id) } role="del-button">&#10004;</button>
           </li>
         ))}
       </ul>
@@ -96,14 +96,15 @@ function App() {
         <h1>
           ToDo Liste
         </h1>
-        <form onSubmit={handleSubmit} className='todo-form'>
+        <form onSubmit={handleSubmit} className='todo-form' role="form">
           <label htmlFor="taskdescription">Neues Todo anlegen:</label>
           <input
             type="text"
             value={taskdescription}
             onChange={handleChange}
+            id="taskdescription"
           />
-          <button type="submit">Absenden</button>
+          <button type="submit" role="button">Absenden</button>
         </form>
         <div>
           {renderTasks(todos)}
