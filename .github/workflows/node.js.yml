@@ -23,11 +23,19 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+    
+    # DEBUG: Verify structure
+    - name: Check directory structure
+      run: ls -R
+
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+        # Ensure cache looks in the right place if needed, 
+        # though npm default cache is usually global.
+        
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test
