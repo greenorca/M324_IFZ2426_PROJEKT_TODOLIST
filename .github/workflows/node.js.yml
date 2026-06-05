@@ -33,6 +33,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+        working-directory: frontend 
         # Ensure cache looks in the right place if needed, 
         # though npm default cache is usually global.
         
