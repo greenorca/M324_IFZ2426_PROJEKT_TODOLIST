@@ -40,7 +40,7 @@ public class TaskController {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @GetMapping("/{id}")
     public Task getTaskById(@Valid @PathVariable("id") Long id) {
-        return taskRepository.findById(id).orElse(null);
+        return taskRepository.findById(id).orElseThrow(() -> new RuntimeException("Task not found"));
     }
 
     @PostMapping
