@@ -1,13 +1,14 @@
 import { render, screen, waitFor, fireEvent } from '@testing-library/react';
+import { vi } from 'vitest';
 import App from './App';
 
 describe('App Component', () => {
   beforeEach(() => {
-    global.fetch = jest.fn();
+    global.fetch = vi.fn();
   });
 
   afterEach(() => {
-    jest.resetAllMocks();
+    vi.restoreAllMocks();
   });
 
   test('renders the app with title and form', () => {
