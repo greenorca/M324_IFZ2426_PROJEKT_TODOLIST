@@ -6,7 +6,7 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Java CI with Maven
+name: Java CI with Maven II
 
 on:
   push:
@@ -14,17 +14,11 @@ on:
   pull_request:
     branches: [ "main" ]
 
-permissions:
-  checks: write
-  contents: read
-
 jobs:
   build:
 
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: backend
+
     steps:
     - uses: actions/checkout@v4
     - name: Set up JDK 21
@@ -34,21 +28,8 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Test with Maven
-      run: mvn -B test --file pom.xml
+      run: mvn test --file backend/pom.xml
 
-    - name: Build with Maven
-      run: mvn -B package --file pom.xml && mkdir staging && cp target/*.jar staging
-
-    - name: Report
-      uses: dorny/test-reporter@v1
-      if: always()
-      with:
-        name: Maven Tests
-        path: backend/target/surefire-reports/*.xml
-        reporter: java-junit
-        fail-on-error: true
-        
-    - uses: actions/upload-artifact@v4
-      with:
-        name: Package
-        path: backend/staging
+    # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
+    - name: Update dependency graph
+      uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6
