@@ -63,7 +63,7 @@ class TaskControllerTest {
         Task savedTask = taskRepository.save(task);
 
         mockMvc.perform(get("/api/tasks/{id}", savedTask.getId()))
-                .andExpect(status().isNotFound())
+                .andExpect(status().is2xxSuccessful())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id", is(savedTask.getId().intValue())))
                 .andExpect(jsonPath("$.taskdescription", is("Test Task")));

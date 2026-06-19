@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -39,8 +40,12 @@ public class TaskController {
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @GetMapping("/{id}")
-    public Task getTaskById(@Valid @PathVariable("id") Long id) {
-        return taskRepository.findById(id).orElseThrow(() -> new RuntimeException("Task not found"));
+    public ResponseEntity<Task> getTaskById(@Valid @PathVariable("id") Long id) {
+        Task result = taskRepository.findById(id).orElse(null);
+        if (result == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(result);
     }
 
     @PostMapping
