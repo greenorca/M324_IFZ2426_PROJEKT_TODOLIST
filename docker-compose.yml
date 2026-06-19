@@ -4,9 +4,9 @@ services:
     container_name: mysql-task-db
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_USER: task_db_user
-      MYSQL_PASSWORD: task_db_password
-      MYSQL_DATABASE: task_db
+      MYSQL_USER: ${DB_USER:-_task_db_user}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-task_db_password}
+      MYSQL_DATABASE: ${DB_NAME:-task_db}
     ports:
       - "3306:3306"
     volumes:
